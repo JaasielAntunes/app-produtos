@@ -5,7 +5,7 @@ import Tabela from "./views/Tabela";
 import NavBar from "./components/NavBar";
 
 export default function App() {
-
+  
   //* CRIANDO OBJETO produto VINDO DO BACKEND
   const produto = {
     id: 0,
@@ -20,9 +20,11 @@ export default function App() {
   const [produtos, setProdutos] = useState([]);
   const [objProduto, setObjProduto] = useState(produto);
 
+  const url = "http://localhost:8080/";
+
   //* USE EFFECT - REQUISIÇÃO PARA O BACKEND
   useEffect(() => {
-    fetch("http://localhost:8080/api/listar")
+    fetch(url + "api/listar")
       .then((retorno) => retorno.json())
       .then((retorno_convert) => setProdutos(retorno_convert));
   }, []);
@@ -33,7 +35,7 @@ export default function App() {
 
   //* CADASTRAR PRODUTO
   const cadastrar = () => {
-    fetch("http://localhost:8080/api/cadastrar", {
+    fetch(url + "api/cadastrar", {
       method: "post",
       body: JSON.stringify(objProduto),
       headers: {
@@ -55,7 +57,7 @@ export default function App() {
 
   //* REMOVER PRODUTO
   const remover = () => {
-    fetch("http://localhost:8080/api/deletar/" + objProduto.id, {
+    fetch(url + "api/deletar/" + objProduto.id, {
       method: "delete",
       headers: {
         "Content-type": "application/json",
@@ -87,7 +89,7 @@ export default function App() {
 
   //* ATUALIZAR PRODUTO
   const atualizar = () => {
-    fetch("http://localhost:8080/api/atualizar", {
+    fetch(url + "api/atualizar", {
       method: "put",
       body: JSON.stringify(objProduto),
       headers: {
@@ -150,7 +152,7 @@ export default function App() {
           remover={remover}
           atualizar={atualizar}
         />
-        
+
         <Tabela vetor={produtos} selecionar={selecionarProduto} />
       </div>
     </>
